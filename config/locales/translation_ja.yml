@@ -57,6 +57,7 @@ ja:
 
     user:
       sign_in: サインイン
+      sign_in_with: でサインイン
       sign_out: サインアウト
       sign_up: サインアップ
       change_password: パスワードの変更
