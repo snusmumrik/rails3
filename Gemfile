@@ -60,3 +60,6 @@ group :development do
   gem 'rails3-generators'
   gem 'metric_fu'
 end
+
+gem 'rails-i18n'
+gem 'i18n_generators'
