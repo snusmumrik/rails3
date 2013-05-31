@@ -1,14 +1,71 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Rails3</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>Rails3</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<%= yield %>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-</body>
+    <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="i-bar"></span>
+            <span class="i-bar"></span>
+            <span class="i-bar"></span>
+          </a>
+          <a class="brand" href="/">Rails3</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <% unless params[:id] %><li class="active"><% else %><li><% end %><%= link_to t("home"), root_path %></li>
+              <% if params[:id] == "about" %><li class="active"><% else %><li><% end %><%= link_to t("about"), "/justified-nav" %></li>
+              <% if params[:id] == "contact" %><li class="active"><% else %><li><% end %><%= link_to t("contact"), "#" %></li>
+            </ul>
+            <ul class="user-nav">
+              <% if user_signed_in? %>
+                <li class="navbar-text pull-right">Signed in as <%= link_to current_user.name, user_path(current_user) %></li>
+                <li class="navbar-text pull-right"><%= link_to(t("link.user.sign_out"), destroy_user_session_path, :method => :delete) %></li>
+              <% else %>
+                <li class="navbar-text pull-right"><%= link_to t("link.user.sign_up"), new_user_registration_path %></li>
+                <li class="navbar-text pull-right"><%= link_to t("link.user.sign_in"), new_user_session_path %></li>
+              <% end %>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+    <% if notice %>
+      <div class="alert alert-success">
+        <p id="notice"><%= notice %></p>
+      </div>
+    <% end %>
+
+    <% if alert %>
+      <div class="alert alert-error">
+        <p id="alert"><%= alert %></p>
+      </div>
+    <% end %>
+
+    <%= yield %>
+
+      <hr>
+      <footer>
+        <p>&copy; <%= Date.today.year %></p>
+      </footer>
+    </div> <!-- /container -->
+
+    <%= javascript_include_tag "application" %>
+  </body>
 </html>
