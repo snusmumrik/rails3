@@ -1,0 +1,23 @@
+<h1><%=t "activerecord.models.user" %><%=t "link.show" %></h1>
+
+<p>
+  <b><%=t "activerecord.attributes.user.name" %></b>
+  <%= @user.name %>
+</p>
+
+<p>
+  <b><%=t "activerecord.attributes.user.email" %></b>
+  <%= @user.email %>
+</p>
+
+<p>
+  <b><%=t "activerecord.attributes.user.image" %></b>
+  <% unless @user.images.blank? %>
+    <%= image_tag @user.images.pop.image.url(:medium) %>
+  <% end %>
+</p>
+
+<% if user_signed_in? && @user.id == current_user.id %>
+  <%= link_to t("link.edit"), edit_user_path(@user.name), :class => "btn" %>
+<% end %>
+<%= link_to t("link.back"), users_path, :class => "btn" %>

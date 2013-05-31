@@ -65,6 +65,8 @@ gem 'rails-i18n'
 gem 'i18n_generators'
 gem 'devise'
 gem 'rails_admin'
-gem "omniauth"
-gem "omniauth-facebook"
+gem 'omniauth'
+gem 'omniauth-facebook'
 gem 'omniauth-twitter'
+gem 'paperclip'
+gem 'kaminari'

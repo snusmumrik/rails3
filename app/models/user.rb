@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   #:confirmable,
   :omniauthable
 
+  has_many :images, :as => :parent, :dependent => :destroy
+
   # Setup accessible (or protected) attributes for your model
   attr_accessible :access_token, :email, :name, :password, :password_confirmation, :provider, :remember_me, :uid
   # attr_accessible :title, :body

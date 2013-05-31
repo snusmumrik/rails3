@@ -1,0 +1,29 @@
+<h1><%=t "activerecord.models.user" %></h1>
+
+<table>
+  <tr>
+    <th><%=t "activerecord.attributes.user.name" %></th>
+    <th><%=t "activerecord.attributes.user.email" %></th>
+    <th><%=t "activerecord.attributes.user.image" %></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= link_to user.name, user_path(user.name) %></td>
+      <td><%= user.email %></td>
+      <td>
+        <% unless user.images.blank? %>
+          <%= image_tag user.images.pop.image.url(:thumb) %>
+        <% end %>
+      </td>
+      <% if user_signed_in? && user.id == current_user.id %>
+        <td><%= link_to t("link.edit"), edit_user_path(user.name) %></td>
+        <td><%= link_to t("link.destroy"), user, confirm: 'Are you sure?', method: :delete %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
+<%= paginate @users %>

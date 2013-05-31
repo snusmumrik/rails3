@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130531063620) do
+ActiveRecord::Schema.define(:version => 20130531080256) do
 
   create_table "admin_users", :force => true do |t|
     t.string   "email",               :default => "", :null => false
@@ -27,6 +27,18 @@ ActiveRecord::Schema.define(:version => 20130531063620) do
   end
 
   add_index "admin_users", ["email"], :name => "index_admin_users_on_email", :unique => true
+
+  create_table "images", :force => true do |t|
+    t.string   "type"
+    t.string   "parent_type"
+    t.integer  "parent_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
 
   create_table "rails_admin_histories", :force => true do |t|
     t.text     "message"

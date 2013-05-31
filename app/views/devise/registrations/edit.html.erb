@@ -1,7 +1,7 @@
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :multipart => true }) do |f| %>
   <%= devise_error_messages! %>
 
-  <h2><%= resource_name.to_s.humanize %><%= t("label.edit") %></h2>
+  <h2><%= resource_name.to_s.humanize %><%= t("view.edit") %></h2>
 
   <div><%= f.label :email %>
   <%= f.email_field :email, :autofocus => true %></div>
@@ -18,6 +18,11 @@
 
   <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i>
   <%= f.password_field :current_password %></div>
+
+  <div>
+    <%= f.label :image %>
+    <%= file_field :image, :image %>
+  </div>
 
   <div><%= f.submit t("link.update") %></div>
 <% end %>

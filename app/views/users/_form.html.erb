@@ -1,0 +1,32 @@
+<%= form_for @user, :html => { :multipart => true } do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation" class="alert alert-error">
+      <!-- <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2> -->
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :image %>
+    <% unless @user.images.blank? %>
+      <%= image_tag @user.images.pop.image.url(:thumb) %>
+    <% end %>
+    <%= file_field :image, :image %>
+  </div>
+  <div>
+    <%= f.submit t("helpers.submit.update"), :class => "btn info" %>
+  </div>
+<% end %>
