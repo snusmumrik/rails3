@@ -33,8 +33,8 @@
             </ul>
             <ul class="user-nav">
               <% if user_signed_in? %>
-                <li class="navbar-text pull-right">Signed in as <%= link_to current_user.name, user_path(current_user) %></li>
                 <li class="navbar-text pull-right"><%= link_to(t("link.user.sign_out"), destroy_user_session_path, :method => :delete) %></li>
+                <li class="navbar-text pull-right"><%= link_to current_user.name, user_path(current_user) %></li>
               <% else %>
                 <li class="navbar-text pull-right"><%= link_to t("link.user.sign_up"), new_user_registration_path %></li>
                 <li class="navbar-text pull-right"><%= link_to t("link.user.sign_in"), new_user_session_path %></li>
