@@ -11,6 +11,19 @@ class User < ActiveRecord::Base
   attr_accessible :access_token, :email, :name, :password, :password_confirmation, :provider, :remember_me, :uid
   # attr_accessible :title, :body
 
+  def self.find_for_twitter_oauth(auth, signed_in_resource=nil)
+    user = User.where(:provider => auth.provider, :uid => auth.uid).first
+    unless user
+      user = User.create(name:auth.info.nickname,
+                         provider:auth.provider,
+                         uid:auth.uid,
+                         email:"#{auth.uid}@twitter.com", # Email address is not provided by the Twitter API.
+                         password:Devise.friendly_token[0,20]
+                         )
+    end
+    user
+  end
+
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
     unless user

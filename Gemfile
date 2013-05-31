@@ -67,3 +67,4 @@ gem 'devise'
 gem 'rails_admin'
 gem "omniauth"
 gem "omniauth-facebook"
+gem 'omniauth-twitter'
