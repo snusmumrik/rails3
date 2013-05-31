@@ -36,3 +36,27 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'debugger'
+
+group :test, :development do
+  gem 'rspec'
+  gem 'rspec-rails'
+  # gem 'guard-rspec'
+  gem 'parallel_tests'
+  gem 'capybara'
+end
+
+group :test do
+  gem 'factory_girl_rails'
+  gem 'spork'
+  gem 'cucumber-rails', :require => false
+  # rails generate cucumber:install --capybara --rspec --spork
+  # database_cleaner is not required, but highly recommended
+  gem 'database_cleaner'
+  # Pretty printed test output
+  gem 'turn', :require => false
+end
+
+group :development do
+  gem 'rails3-generators'
+  gem 'metric_fu'
+end
