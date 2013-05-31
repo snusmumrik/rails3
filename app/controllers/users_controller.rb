@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.where("deleted_at IS NULL").page(params[:page]).per(1)
+    @users = User.where("deleted_at IS NULL").page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -61,7 +61,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update_attributes(params[:user])
         @user.images << @image if @image
-        format.html { redirect_to user_path(current_user.name), notice: 'User was successfully updated.' }
+        format.html { redirect_to user_path(current_user.username), notice: t("devise.registrations.updated") }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -83,6 +83,6 @@ class UsersController < ApplicationController
 
   protected
   def find_user
-    @user = User.where(["name = ?", params[:id]]).first || User.find(params[:id])
+    @user = User.where(["username = ?", params[:id]]).first || User.find(params[:id])
   end
 end

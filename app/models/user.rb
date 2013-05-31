@@ -10,33 +10,23 @@ class User < ActiveRecord::Base
   has_many :images, :as => :parent, :dependent => :destroy
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :access_token, :email, :name, :password, :password_confirmation, :provider, :remember_me, :uid
+  attr_accessible :access_token, :email, :name, :password, :password_confirmation, :provider, :remember_me, :uid, :username
   # attr_accessible :title, :body
 
-  def self.find_for_twitter_oauth(auth, signed_in_resource=nil)
-    user = User.where(:provider => auth.provider, :uid => auth.uid).first
-    unless user
-      user = User.create(name:auth.info.nickname,
-                         provider:auth.provider,
-                         uid:auth.uid,
-                         email:"#{auth.uid}@twitter.com", # Email address is not provided by the Twitter API.
-                         password:Devise.friendly_token[0,20]
-                         )
-    end
-    user
-  end
+  validates :name, :presence => true
+  validates :username, :presence => true, :uniqueness => true
 
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
     unless user
-      user = User.create({
-        :name => auth.extra.raw_info.name,
-        :provider => auth.provider,
-        :uid => auth.uid,
-        :email => auth.info.email,
-        :access_token => auth.credentials.token,
-        :password => Devise.friendly_token[0, 20],
-      })
+      user = User.create({ :name => auth.extra.raw_info.name,
+                           :username => auth.extra.raw_info.username,
+                           :provider => auth.provider,
+                           :uid => auth.uid,
+                           :email => auth.info.email,
+                           :access_token => auth.credentials.token,
+                           :password => Devise.friendly_token[0, 20],
+                         })
     end
     user
   end
@@ -47,5 +37,19 @@ class User < ActiveRecord::Base
         user.email = data["email"] if user.email.blank?
       end
     end
+  end
+
+  def self.find_for_twitter_oauth(auth, signed_in_resource=nil)
+    user = User.where(:provider => auth.provider, :uid => auth.uid).first
+    unless user
+      user = User.create({ :name => auth.info.name,
+                           :username => auth.info.nickname,
+                           :provider => auth.provider,
+                           :uid => auth.uid,
+                           :email => "#{auth.uid}@twitter.com", # Email address is not provided by the Twitter API.
+                           :password => Devise.friendly_token[0,20]
+                         })
+    end
+    user
   end
 end

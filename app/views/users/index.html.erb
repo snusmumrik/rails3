@@ -3,6 +3,7 @@
 <table>
   <tr>
     <th><%=t "activerecord.attributes.user.name" %></th>
+    <th><%=t "activerecord.attributes.user.username" %></th>
     <th><%=t "activerecord.attributes.user.email" %></th>
     <th><%=t "activerecord.attributes.user.image" %></th>
     <th></th>
@@ -11,7 +12,8 @@
 
   <% @users.each do |user| %>
     <tr>
-      <td><%= link_to user.name, user_path(user.name) %></td>
+      <td><%= link_to user.name, user_path(user.username) %></td>
+      <td><%= link_to user.username, user_path(user.username) %></td>
       <td><%= user.email %></td>
       <td>
         <% unless user.images.blank? %>
@@ -19,8 +21,8 @@
         <% end %>
       </td>
       <% if user_signed_in? && user.id == current_user.id %>
-        <td><%= link_to t("link.edit"), edit_user_path(user.name) %></td>
-        <td><%= link_to t("link.destroy"), user, confirm: 'Are you sure?', method: :delete %></td>
+        <td><%= link_to t("link.edit"), edit_user_path(user.username) %></td>
+        <td><%= link_to t("link.destroy"), user, confirm: t("message.are_you_sure"), method: :delete %></td>
       <% end %>
     </tr>
   <% end %>

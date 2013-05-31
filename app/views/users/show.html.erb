@@ -6,6 +6,11 @@
 </p>
 
 <p>
+  <b><%=t "activerecord.attributes.user.username" %></b>
+  <%= @user.username %>
+</p>
+
+<p>
   <b><%=t "activerecord.attributes.user.email" %></b>
   <%= @user.email %>
 </p>
@@ -18,6 +23,6 @@
 </p>
 
 <% if user_signed_in? && @user.id == current_user.id %>
-  <%= link_to t("link.edit"), edit_user_path(@user.name), :class => "btn" %>
+  <%= link_to t("link.edit"), edit_user_path(@user.username), :class => "btn" %>
 <% end %>
 <%= link_to t("link.back"), users_path, :class => "btn" %>

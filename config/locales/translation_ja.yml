@@ -74,6 +74,6 @@ ja:
       resend_confirmation: 登録メールの再送
 
   message:
-    are_you_sure?: 削除してよろしいですか？
+    are_you_sure: 削除してよろしいですか？
 
   current_sign_in_at: current_sign_in_at  #g
