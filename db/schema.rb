@@ -54,8 +54,8 @@ ActiveRecord::Schema.define(:version => 20130531095715) do
   add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_rails_admin_histories"
 
   create_table "users", :force => true do |t|
-    t.string   "name",                   :default => "", :null => false
-    t.string   "username",                               :null => false
+    t.string   "name"
+    t.string   "username"
     t.string   "email",                  :default => "", :null => false
     t.string   "encrypted_password",     :default => "", :null => false
     t.string   "reset_password_token"

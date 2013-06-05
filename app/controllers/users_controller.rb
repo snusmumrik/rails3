@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :authorized_user!, :only => [:edit, :upate, :destroy]
   before_filter :find_user, :except => :index
 
   # GET /users
@@ -61,7 +62,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update_attributes(params[:user])
         @user.images << @image if @image
-        format.html { redirect_to user_path(current_user.username), notice: t("devise.registrations.updated") }
+        format.html { redirect_to user_path(@user.username), notice: t("devise.registrations.updated") }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -84,5 +85,13 @@ class UsersController < ApplicationController
   protected
   def find_user
     @user = User.where(["username = ?", params[:id]]).first || User.find(params[:id])
+  end
+
+  def authorized_user!
+    find_user
+    unless @user == current_user
+      flash[:alert] = t("messages.unauthorided")
+      redirect_to users_path
+    end
   end
 end

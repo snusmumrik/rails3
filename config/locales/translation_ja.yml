@@ -17,7 +17,7 @@ ja:
         image: 画像
         last_sign_in_at: last_sign_in_at  #g
         last_sign_in_ip: last_sign_in_ip  #g
-        name: ユーザーネーム
+        name: 名前
         password: パスワード
         password_confirmation: パスワードの確認
         remember_created_at: remember_created_at  #g
@@ -25,6 +25,7 @@ ja:
         reset_password_sent_at: reset_password_sent_at  #g
         reset_password_token: reset_password_token  #g
         unconfirmed_email: unconfirmed_email  #g
+        username: ユーザーネーム
 
       admin_user:
         current_sign_in_ip: current_sign_in_ip  #g
@@ -73,7 +74,6 @@ ja:
       forgot_password: パスワードをお忘れですか？
       resend_confirmation: 登録メールの再送
 
-  message:
+  messages:
     are_you_sure: 削除してよろしいですか？
-
-  current_sign_in_at: current_sign_in_at  #g
+    unauthorided: 権限のないリクエストです

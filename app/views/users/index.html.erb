@@ -1,4 +1,4 @@
-<h1><%=t "activerecord.models.user" %></h1>
+<h1><%=t "activerecord.models.user" %><%=t "views.index"  %></h1>
 
 <table>
   <tr>
@@ -8,22 +8,20 @@
     <th><%=t "activerecord.attributes.user.image" %></th>
     <th></th>
     <th></th>
+    <th></th>
   </tr>
 
   <% @users.each do |user| %>
     <tr>
-      <td><%= link_to user.name, user_path(user.username) %></td>
-      <td><%= link_to user.username, user_path(user.username) %></td>
+      <td><%= user.name %></td>
+      <td><%= user.username %></td>
       <td><%= user.email %></td>
       <td>
         <% unless user.images.blank? %>
           <%= image_tag user.images.pop.image.url(:thumb) %>
         <% end %>
       </td>
-      <% if user_signed_in? && user.id == current_user.id %>
-        <td><%= link_to t("link.edit"), edit_user_path(user.username) %></td>
-        <td><%= link_to t("link.destroy"), user, confirm: t("message.are_you_sure"), method: :delete %></td>
-      <% end %>
+      <td><%= link_to t("link.show"), user_path(user.username) %></td>
     </tr>
   <% end %>
 </table>

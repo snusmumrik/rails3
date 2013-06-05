@@ -5,18 +5,12 @@ describe User do
     @user = FactoryGirl.create(:user)
   end
 
-  it "is not valid without name" do
-    @user.name = nil
-    @user.should_not be_valid
-  end
-
-  it "is not valid without username" do
-    @user.username = nil
-    @user.should_not be_valid
-  end
-
   it "is not valid with duplicated username" do
-    @user2 = FactoryGirl.build(:user, :username => @user.username)
-    @user2.should_not be_valid
+    other_user = FactoryGirl.build(:user, :username => @user.username, :provider => @user.provider)
+    other_user.should_not be_valid
+  end
+
+  it "replace username when already taken" do
+    pending "don't know how to test omniauth..."
   end
 end

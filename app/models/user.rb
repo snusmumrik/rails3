@@ -13,12 +13,24 @@ class User < ActiveRecord::Base
   attr_accessible :access_token, :email, :name, :password, :password_confirmation, :provider, :remember_me, :uid, :username
   # attr_accessible :title, :body
 
-  validates :name, :presence => true
-  validates :username, :presence => true, :uniqueness => true
+  validates :username, :uniqueness => true
+
+  def get_name
+    if !self.name.blank?
+      self.name
+    elsif !self.username.blank?
+      self.username
+    else
+      self.email
+    end
+  end
 
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
     unless user
+      if User.where(["username =?", auth.extra.raw_info.username]).first
+        auth.extra.raw_info.username += auth.uid
+      end
       user = User.create({ :name => auth.extra.raw_info.name,
                            :username => auth.extra.raw_info.username,
                            :provider => auth.provider,
@@ -41,6 +53,9 @@ class User < ActiveRecord::Base
 
   def self.find_for_twitter_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
+    if User.where(["username =?", auth.info.nickname]).first
+      auth.info.nickname += auth.uid
+    end
     unless user
       user = User.create({ :name => auth.info.name,
                            :username => auth.info.nickname,

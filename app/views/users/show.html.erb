@@ -1,4 +1,4 @@
-<h1><%=t "activerecord.models.user" %><%=t "link.show" %></h1>
+<h1><%=t "activerecord.models.user" %><%=t "views.show" %></h1>
 
 <p>
   <b><%=t "activerecord.attributes.user.name" %></b>
@@ -24,5 +24,6 @@
 
 <% if user_signed_in? && @user.id == current_user.id %>
   <%= link_to t("link.edit"), edit_user_path(@user.username), :class => "btn" %>
+  <%= link_to t("link.destroy"), @user, confirm: t("messages.are_you_sure"), method: :delete, :class => "btn" %>
 <% end %>
 <%= link_to t("link.back"), users_path, :class => "btn" %>
