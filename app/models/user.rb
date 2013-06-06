@@ -13,7 +13,9 @@ class User < ActiveRecord::Base
   attr_accessible :access_token, :email, :name, :password, :password_confirmation, :provider, :remember_me, :uid, :username
   # attr_accessible :title, :body
 
-  validates :username, :uniqueness => true
+  acts_as_paranoid
+  validates_as_paranoid
+  validates_uniqueness_of_without_deleted :username
 
   def get_name
     if !self.name.blank?
